@@ -28,7 +28,7 @@ for country in df['Country'].unique():
 
     # Add a circle marker to the map for the country, with size and color based on the number of cases
     folium.CircleMarker(location=[location.latitude, location.longitude],
-                        radius=cases/100000,
+                        radius=cases/1000000,
                         color='red',
                         fill_color='red',
                         fill_opacity=0.5,
