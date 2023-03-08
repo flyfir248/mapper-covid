@@ -5,7 +5,7 @@ import os
 from geopy.geocoders import Nominatim
 
 # Load COVID-19 data into a Pandas dataframe
-df = pd.read_csv('WHO-COVID-19-global-data.csv')
+df = pd.read_csv('https://covid19.who.int/WHO-COVID-19-global-data.csv')
 
 # Create a Nominatim geolocator
 geolocator = Nominatim(user_agent='my-app')
@@ -26,13 +26,10 @@ for country in df['Country'].unique():
     # Get the number of COVID-19 cases for the country
     cases = df.loc[df['Country'] == country, 'Cumulative_cases'].max()
 
+    deaths = df.loc[df['Country'] == country, 'Cumulative_deaths'].max()
+
     # Add a circle marker to the map for the country, with size and color based on the number of cases
-    folium.CircleMarker(location=[location.latitude, location.longitude],
-                        radius=cases/1000000,
-                        color='red',
-                        fill_color='red',
-                        fill_opacity=0.5,
-                        popup=f"{country}: {cases} cases").add_to(map)
+    folium.CircleMarker(location=[location.latitude, location.longitude], radius=cases/1000000, color='red', fill_color='red', fill_opacity=0.5, popup=f"{country}, cases: {cases}, deaths: {deaths}").add_to(map)
 
 # Display the map
 # Save the map as an HTML file
